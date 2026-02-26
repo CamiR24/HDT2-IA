@@ -41,5 +41,11 @@ class FrozeLakeMDP:
             col = max(col - 1, 0)
         
         return self._pos_to_state(row, col)
+    
+    def _get_perpendicular_actions(self, action):
+        if action in [0, 1]:  # Norte o Sur
+            return [2, 3]     # Este, Oeste
+        else:                 # Este u Oeste
+            return [0, 1]     # Norte, Sur
 
     
