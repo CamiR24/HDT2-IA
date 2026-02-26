@@ -55,6 +55,7 @@ class FrozeLakeMDP:
                 for a in range(self.n_actions):
                     self.T[s, a, s] = 1.0
                 continue
+
             for a in range(self.n_actions): #acción deseada
                 intended_state = self._move(s, a)
                 self.T[s, a, intended_state] += 1/3
@@ -62,4 +63,11 @@ class FrozeLakeMDP:
                     perp_state = self._move(s, perp_a)
                     self.T[s, a, perp_state] += 1/3
 
-    
+    def _build_reward_matrix(self):
+        for s in range(self.n_states):
+            for a in range(self.n_actions):
+                for s_prime in range(self.n_states): #s_prime es si llegamos a G
+                    if s_prime == self.goal:
+                        self.R[s, a, s_prime] = 1.0 #si llegamos nos da una recompensa
+                    else:
+                        self.R[s, a, s_prime] = 0.0
