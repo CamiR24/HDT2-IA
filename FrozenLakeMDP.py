@@ -43,9 +43,23 @@ class FrozeLakeMDP:
         return self._pos_to_state(row, col)
     
     def _get_perpendicular_actions(self, action):
-        if action in [0, 1]:  # Norte o Sur
-            return [2, 3]     # Este, Oeste
-        else:                 # Este u Oeste
-            return [0, 1]     # Norte, Sur
+        if action in [0, 1]:  #Norte o Sur
+            return [2, 3]     #Este, Oeste
+        else:                 #Este u Oeste
+            return [0, 1]     #Norte, Sur
+    
+        
+    def _build_transition_matrix(self):
+        for s in range(self.n_states):
+            if s in self.holes or s == self.goal: #hoyos o ganar, acciones terminales
+                for a in range(self.n_actions):
+                    self.T[s, a, s] = 1.0
+                continue
+            for a in range(self.n_actions): #acción deseada
+                intended_state = self._move(s, a)
+                self.T[s, a, intended_state] += 1/3
+                for perp_a in self._get_perpendicular_actions(a): #posibles acciones perpendiculares
+                    perp_state = self._move(s, perp_a)
+                    self.T[s, a, perp_state] += 1/3
 
     
