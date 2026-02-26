@@ -22,9 +22,11 @@ class FrozeLakeMDP:
         self._build_transition_matrix()
         self._build_reward_matrix()
 
-    #def _state_to_pos():
+    def _state_to_pos(self, s):
+        return divmod(s, self.grid_size)
 
-    #def _pos_to_state():
+    def _pos_to_state(self, row, col):
+        return row * self.grid_size + col
 
     #def _move():
 
