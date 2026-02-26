@@ -28,6 +28,18 @@ class FrozeLakeMDP:
     def _pos_to_state(self, row, col):
         return row * self.grid_size + col
 
-    #def _move():
+    def _move(self, s, action):
+        row, col = self._state_to_pos(s)
+        
+        if action == 0:  #Norte
+            row = max(row - 1, 0)
+        elif action == 1:  #Sur
+            row = min(row + 1, self.grid_size - 1)
+        elif action == 2:  #Este
+            col = min(col + 1, self.grid_size - 1)
+        elif action == 3:  #Oeste
+            col = max(col - 1, 0)
+        
+        return self._pos_to_state(row, col)
 
     
